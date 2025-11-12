@@ -118,17 +118,6 @@
       box-shadow: 0 3px 10px rgba(139, 112, 87, 0.1);
     }
 
-    .paste-btn {
-      border-color: #c4a484;
-      color: #8b7057;
-      background: #f9f7f4;
-    }
-
-    .paste-btn:hover {
-      background: #f5f1ed;
-      border-color: #a08967;
-    }
-
     .copy-btn {
       border-color: #b8a990;
       color: #8b7057;
@@ -149,17 +138,6 @@
     .clear-btn:hover {
       background: #f5f2ee;
       border-color: #b8a990;
-    }
-
-    .followup-btn {
-      border-color: #a08967;
-      color: #6b5b47;
-      background: #f9f7f4;
-    }
-
-    .followup-btn:hover {
-      background: #f0ebe4;
-      border-color: #8b7057;
     }
 
     .step {
@@ -381,7 +359,7 @@
     
     Translation Need 2:
     Polishing the Script into a day to day spoken style:
-    The Challenge here is, as we try to keep the information conveyed in the same timing, length and order - Because of the structural difference between English and Telugu Languages - Some sentences in the script came like broken pieces. For example, let us say there are two blocks. In natural English Flow it is Block A followed by block B. And to maintain the sequence we placed it as Block A followed by block B In telugu translation also. But in natural telugu flow, it makes a complete thought when it is Actually Block  B followed by Block A. But Video syncing is important, So we are keeping it as block A followed by Block B in telugu also.
+    The challenge here is, as we try to keep the information conveyed in the same timing, length and order - Because of the structural difference between English and Telugu Languages - Some sentences in the script came like broken pieces. For example, let us say there are two blocks. In natural English Flow it is Block A followed by block B. And to maintain the sequence we placed it as Block A followed by block B In telugu translation also. But in natural telugu flow, it makes a complete thought when it is Actually Block  B followed by Block A. But Video syncing is important, So we are keeping it as block A followed by Block B in telugu also.
         
     Now your job is, let us say you are someone who is well versed in general day to day spoken telugu. 
         
@@ -1171,9 +1149,9 @@
     ; indicates connected sentences.
     - indicates additional/different aspect information related to the main idea of the sentence.
     
-    Please brek both the source (English/Tamil) Script and the Translation (Telugu) script.
+    Please break both the source (English/Tamil) Script and the Translation (Telugu) script.
     
-    Video script for breaking into paragraphs:
+    Below are the English and Telugu scripts for breaking into paragraphs:
     
     
     
@@ -1707,30 +1685,26 @@ Example output:
 
 
 
-Below are the english  and the telugu scripts.
-
-English Script:
-
-
-Telugu Script for improving: 
+Below are the english script and the telugu script (that needs to be refined):
 
 
 
-.</script>
+
+</script>
 
 <script>
   const message = document.getElementById('message');
 
   const descriptions = {
-    1: "Translation",
-    2: "Breaking into paragraphs",
-    3: "Review"
+    1: "Translation.",
+    2: "Breaking into Paragraphs.",
+    3: "Review."
   };
 
   const results = {
     1: "Translated Script ",
-    2: "Paragraphs",
-    3: "Final "
+    2: "Paragraphs.",
+    3: "Final."
   };
 
   const stepNames = {
@@ -1753,19 +1727,6 @@ Telugu Script for improving:
     console.error(`Prompt for step ${step} not found!`);
     return "";
   }
-
-  function handlePaste(step) {
-    navigator.clipboard.readText().then(text => {
-        const targetBox = document.getElementById(`input${step}`);
-        if (targetBox) {
-            targetBox.value = text;
-            showMessage(`✅ Pasted plain text into Step ${step}`);
-        }
-    }).catch(err => {
-        console.error('Failed to read clipboard contents: ', err);
-        showMessage("❌ Could not paste from clipboard.");
-    });
-  }
   
   function handleClear(step) {
     const box = document.getElementById(`input${step}`);
@@ -1781,15 +1742,6 @@ Telugu Script for improving:
         }
     }
     showMessage("🗑️ All input boxes cleared");
-  }
-
-  function copyFollowUp(step) {
-    let text = "";
-    if (step === 1) {
-      text = "This is a follow-up prompt for step 1.";
-    }
-    navigator.clipboard.writeText(text);
-    showMessage("💬 Follow-up prompt copied!");
   }
 
   function handleCopy(step) {
@@ -1822,23 +1774,20 @@ Telugu Script for improving:
     return partDiv;
   }
 
+  // --- MODIFIED FUNCTION ---
+  // This function no longer creates Paste or Follow-up buttons.
   function createStep(i) {
     const stepDiv = document.createElement('div');
     stepDiv.className = 'step';
     
-    // Step 1 is the only one that might need an audio file attachment reminder
     let copyButtonText = (i === 1) ? "📋 Copy Prompt (attach audio file)" : "📋 Copy Prompt";
 
-    let textarea = `<textarea id="input${i}" placeholder="Paste or type content for Step ${i}..."></textarea>`;
+    let textarea = `<textarea id="input${i}" placeholder="Paste the English and Telugu scripts..."></textarea>`;
     
-    // Step 1 gets a Paste button, others do not (as per original logic where only non-first steps had it)
-    let pasteButton = (i !== 1) ? `<button class="paste-btn" onclick="handlePaste(${i})">📋 Paste</button>` : '';
-
+    // The button group is now simplified.
     let buttonGroup = `
       <div class="button-group">
-        ${pasteButton}
         <button class="copy-btn" onclick="handleCopy(${i})">${copyButtonText}</button>
-        ${followUpButtonHTML(i)}
         <button class="clear-btn" onclick="handleClear(${i})">🗑️ Clear</button>
       </div>`;
 
@@ -1854,13 +1803,6 @@ Telugu Script for improving:
       ${buttonGroup}
     `;
     return stepDiv;
-  }
-
-  function followUpButtonHTML(i) {
-    if (i === 1) {
-      return `<button class="followup-btn" onclick="copyFollowUp(${i})">💬 Follow-up Prompt</button>`;
-    }
-    return '';
   }
 
   // Append a single part with all 3 steps
