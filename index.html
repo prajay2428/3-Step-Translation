@@ -1781,8 +1781,12 @@ Below are the english script and the telugu script (that needs to be refined):
     stepDiv.className = 'step';
     
     let copyButtonText = (i === 1) ? "📋 Copy Prompt (attach audio file)" : "📋 Copy Prompt";
-
-    let textarea = `<textarea id="input${i}" placeholder="Paste the English and Telugu scripts..."></textarea>`;
+     
+    let textarea = ''; // Start with an empty string
+    if (i !== 1) { // If the step number is NOT 1...
+      // ...then create the textarea.
+      textarea = `<textarea id="input${i}" placeholder="Paste or type content for Step ${i}..."></textarea>`;
+    }
     
     // The button group is now simplified.
     let buttonGroup = `
