@@ -2,25 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>3 Step Workflow</title>
+  <title>3 Step Workflow + Suggestions</title>
   <style>
-    * {
-      box-sizing: border-box;
+    /* --- THEME VARIABLES --- */
+    :root {
+      /* Theme Colors */
+      --bg-main: #faf9f7;
+      --bg-container: #ffffff;
+      --text-main: #5d5043;
+      --accent-brown: #8b7057;
+      --accent-light: #c4a484;
+      --border-color: #e0d5c7;
+      
+      /* Logic Colors for Suggestions */
+      --highlight-green: #5CE65C;
+      --highlight-yellow: #fff9c4;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       padding: 20px;
-      background: #faf9f7;
+      background: var(--bg-main);
       min-height: 100vh;
       margin: 0;
       line-height: 1.6;
+      color: var(--text-main);
     }
 
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      background: #ffffff;
+      background: var(--bg-container);
       border-radius: 20px;
       border: 1px solid #e8e5e0;
       box-shadow: 0 10px 40px rgba(139, 112, 87, 0.08);
@@ -29,7 +43,7 @@
 
     h2 {
       text-align: center;
-      color: #8b7057;
+      color: var(--accent-brown);
       margin-bottom: 10px;
       font-size: 2.2rem;
       font-weight: 700;
@@ -44,294 +58,139 @@
       font-weight: 400;
     }
 
-    .clear-all-container {
-      text-align: center;
-      margin-bottom: 35px;
-      padding-bottom: 25px;
-      border-bottom: 1px solid #e8e5e0;
-    }
-
-    .clear-all-btn {
-      background: #f7f5f3;
-      color: #8b7057;
-      border: 1px solid #d4c4a8;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 600;
-    }
-
-    .clear-all-btn:hover {
-      background: #f0ebe4;
-      border-color: #8b7057;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(139, 112, 87, 0.1);
-    }
-
-    textarea {
-      width: 100%;
-      height: 160px;
-      font-size: 14px;
-      padding: 16px;
-      white-space: pre-wrap;
-      resize: vertical;
-      margin: 12px 0;
-      border: 1px solid #e0d5c7;
-      border-radius: 12px;
-      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-      background: #fefdfb;
-      color: #5d5043;
-      transition: all 0.2s ease;
-    }
-
-    textarea:focus {
-      outline: none;
-      border-color: #c4a484;
-      box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1);
-      background: #ffffff;
-    }
-
-    textarea::placeholder {
-      color: #b8a990;
-    }
-
+    /* --- BUTTONS --- */
     button {
       padding: 10px 18px;
       margin-right: 10px;
       margin-bottom: 8px;
       font-size: 0.9rem;
       cursor: pointer;
-      border: 1px solid #e0d5c7;
+      border: 1px solid var(--border-color);
       border-radius: 10px;
       transition: all 0.2s ease;
       font-weight: 500;
       background: #fefdfb;
-      color: #8b7057;
+      color: var(--accent-brown);
     }
 
     button:hover {
       transform: translateY(-1px);
       background: #f7f5f3;
-      border-color: #c4a484;
+      border-color: var(--accent-light);
       box-shadow: 0 3px 10px rgba(139, 112, 87, 0.1);
     }
 
-    .copy-btn {
-      border-color: #b8a990;
-      color: #8b7057;
+    .clear-all-btn {
       background: #f7f5f3;
+      color: var(--accent-brown);
+      border: 1px solid #d4c4a8;
+      width: auto;
     }
+    .clear-all-btn:hover { background: #f0ebe4; }
 
-    .copy-btn:hover {
-      background: #f2ede6;
-      border-color: #9d8670;
+    .copy-btn { border-color: #b8a990; background: #f7f5f3; }
+    .clear-btn { border-color: #d4c4a8; color: #a0916d; background: #faf9f7; }
+    
+    /* Special format button for suggestions */
+    .btn-format { background-color: #e8f9f5; color: #20c997; border-color: #b2f5ea; }
+    .btn-format:hover { background-color: #d1f3e9; }
+
+    /* --- TEXT AREAS (Steps 2 & 3) --- */
+    textarea {
+      width: 100%; height: 160px; font-size: 14px; padding: 16px;
+      white-space: pre-wrap; resize: vertical; margin: 12px 0;
+      border: 1px solid var(--border-color); border-radius: 12px;
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+      background: #fefdfb; color: var(--text-main);
+      transition: all 0.2s ease;
     }
+    textarea:focus { outline: none; border-color: var(--accent-light); background: #ffffff; }
 
-    .clear-btn {
-      border-color: #d4c4a8;
-      color: #a0916d;
-      background: #faf9f7;
+    /* --- CONTENT EDITABLE (Suggestions Box) --- */
+    .editable {
+      width: 100%; min-height: 200px; max-height: 500px;
+      overflow-y: auto; font-size: 14px; padding: 16px;
+      border: 1px solid var(--border-color); border-radius: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fefdfb; color: var(--text-main);
+      white-space: pre-wrap; margin: 12px 0;
     }
+    .editable:focus { outline: none; border-color: var(--accent-light); background: #ffffff; box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1); }
+    
+    /* Suggestions Table Styling */
+    .editable table { width: 100%; border-collapse: collapse; margin: 1em 0; border: 1px solid var(--border-color); }
+    .editable td, .editable th { border: 1px solid var(--border-color); padding: 8px; vertical-align: top; }
+    .editable th { background-color: #f1f3f5; font-weight: 700; }
+    .editable b, .editable strong { font-weight: 700; }
+    .editable:empty:before { content: attr(data-placeholder); color: #b8a990; }
 
-    .clear-btn:hover {
-      background: #f5f2ee;
-      border-color: #b8a990;
-    }
-
-    .step {
-      background: #ffffff;
-      padding: 28px;
-      margin-bottom: 24px;
-      border-radius: 16px;
-      border: 1px solid #f0ebe4;
+    /* --- STEP CONTAINERS --- */
+    .step, .suggestions-section {
+      background: #ffffff; padding: 28px; margin-bottom: 24px;
+      border-radius: 16px; border: 1px solid #f0ebe4;
       transition: all 0.2s ease;
       box-shadow: 0 2px 12px rgba(139, 112, 87, 0.04);
     }
+    
+    .suggestions-section { border-left: 5px solid #20c997; }
+    .part1 { border-left: 5px solid #4a90e2; }
 
-    .step:hover {
-      border-color: #e0d5c7;
-      background: #fefdfb;
-      box-shadow: 0 4px 20px rgba(139, 112, 87, 0.08);
-    }
-
-    .step h3 {
-      margin: 0 0 18px 0;
-      color: #5d5043;
-      font-size: 1.3rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .step h3, .suggestions-section h3 {
+      margin: 0 0 18px 0; color: var(--text-main); font-size: 1.3rem;
+      font-weight: 600; display: flex; align-items: center; gap: 12px;
     }
 
     .step-number {
-      background: #8b7057;
-      color: #ffffff;
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 0.9rem;
+      background: var(--accent-brown); color: #ffffff; width: 32px; height: 32px;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
     }
-
-    .ai-name {
-      background: #f7f5f3;
-      color: #8b7057;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      margin-left: auto;
-      border: 1px solid #e8e5e0;
-    }
+    .step-icon-green { background: #20c997; }
 
     .step-description {
-      background: #f9f7f4;
-      color: #6b5b47;
-      font-size: 0.95rem;
-      margin-bottom: 14px;
-      padding: 16px 18px;
-      border-radius: 10px;
-      border-left: 3px solid #c4a484;
+      background: #f9f7f4; color: #6b5b47; font-size: 0.95rem; margin-bottom: 14px;
+      padding: 16px 18px; border-radius: 10px; border-left: 3px solid var(--accent-light);
     }
-
     .step-result {
-      background: #f5f2ee;
-      color: #7a6b56;
-      font-size: 0.95rem;
-      margin-bottom: 16px;
-      padding: 16px 18px;
-      border-radius: 10px;
-      border-left: 3px solid #a08967;
+      background: #f5f2ee; color: #7a6b56; font-size: 0.95rem; margin-bottom: 16px;
+      padding: 16px 18px; border-radius: 10px; border-left: 3px solid #a08967;
     }
 
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
-    }
-
-    .part-section {
-      padding: 25px;
-      border-radius: 16px;
-      margin-bottom: 40px;
-    }
-
-    .part-section h3 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 25px;
-      text-align: center;
-      border-bottom: 2px solid rgba(0,0,0,0.1);
-      padding-bottom: 10px;
-    }
-
-    .part1 { background: #f0f7ff; border-left: 5px solid #4a90e2; }
-    .part1 h3 { color: #4a90e2; }
+    /* --- UTILS --- */
+    .button-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+    .clear-all-container { text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 1px solid #e8e5e0; }
+    
+    hr { border: none; height: 1px; background: #e8e5e0; margin: 30px 0; }
 
     #message {
-      position: fixed;
-      top: 24px;
-      right: 24px;
-      background: #ffffff;
-      color: #5d5043;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-weight: 500;
-      border: 1px solid #e0d5c7;
-      box-shadow: 0 6px 20px rgba(139, 112, 87, 0.15);
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
-      z-index: 1000;
-      font-size: 0.9rem;
+      position: fixed; top: 24px; right: 24px; background: #ffffff; color: var(--text-main);
+      padding: 14px 20px; border-radius: 12px; font-weight: 500;
+      border: 1px solid var(--border-color); box-shadow: 0 6px 20px rgba(139, 112, 87, 0.15);
+      transform: translateX(400px); transition: transform 0.3s ease; z-index: 1000;
     }
+    #message.show { transform: translateX(0); }
 
-    #message.show {
-      transform: translateX(0);
-    }
-
-    hr {
-      border: none;
-      height: 1px;
-      background: #e8e5e0;
-      margin: 30px 0;
-      border-radius: 1px;
-    }
-    
     #scrollToTopBtn {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 999;
-      border: none;
-      outline: none;
-      background-color: #8b7057;
-      color: white;
-      cursor: pointer;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 5px 15px rgba(139, 112, 87, 0.3);
-      transition: all 0.3s ease;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      position: fixed; bottom: 30px; right: 30px; z-index: 999;
+      background-color: var(--accent-brown); color: white;
+      width: 50px; height: 50px; border-radius: 50%; border: none;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 5px 15px rgba(139, 112, 87, 0.3); transition: all 0.3s ease;
     }
-
-    #scrollToTopBtn.visible {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    #scrollToTopBtn:hover {
-      background-color: #5d5043;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(139, 112, 87, 0.4);
-    }
-
-    #scrollToTopBtn svg {
-      width: 24px;
-      height: 24px;
-    }
+    #scrollToTopBtn.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    #scrollToTopBtn:hover { transform: translateY(-3px); background-color: #5d5043; }
 
     @media (max-width: 768px) {
-      body {
-        padding: 15px;
-      }
-      .container {
-        padding: 25px;
-      }
-      h2 {
-        font-size: 1.8rem;
-      }
-      .step {
-        padding: 20px;
-      }
-      .button-group {
-        flex-direction: column;
-      }
-      button {
-        margin-right: 0;
-        width: 100%;
-      }
+      body { padding: 15px; }
+      .container { padding: 25px; }
+      .button-group { flex-direction: column; }
+      button { width: 100%; }
     }
-
-    script[type="text/plain"] {
-      display: none;
-    }
+    script[type="text/plain"] { display: none; }
   </style>
 </head>
 <body>
+
   <div class="container">
     <h2>3 Step Workflow</h2>
     <p class="subtitle">A streamlined 3-step pipeline</p>
@@ -340,14 +199,53 @@
       <button class="clear-all-btn" onclick="clearAllInputs()">🗑️ Clear All Input Boxes</button>
     </div>
 
+    <!-- Steps 1, 2, 3 Container -->
+    <div id="stepsContainer"></div>
+
     <hr>
 
-    <div id="stepsContainer"></div>
+    <!-- SECTION: Suggestions (Added as requested) -->
+    <div class="suggestions-section">
+      <h3>
+        <span class="step-number step-icon-green">4</span>
+        <span>Suggestions & Review</span>
+      </h3>
+      <div class="step-description">
+        <strong>📋 Instructions:</strong> Enter specific suggestions or review points here. 
+        Use the <strong>Format Bold</strong> button to highlight bold text (Green) and bracketed text [like this] (Yellow).
+        <br><br>
+       
+      </div>
+      
+      <!-- Content Editable Div for Formatting Logic -->
+      <div id="input_suggestions" class="editable" contenteditable="true" data-placeholder="Paste or type your review notes here..."></div>
+      
+      <div class="button-group">
+        <!-- Special Format Button -->
+        <button class="btn-format" onclick="formatBoldText()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
+            Format Bold
+        </button>
+        <button class="clear-btn" onclick="handleClearSuggestions()">🗑️ Clear</button>
+      </div>
+    </div>
 
     <div id="message"></div>
   </div>
 
-  <!-- Prompts -->
+  <button id="scrollToTopBtn" title="Scroll to Top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <div style="text-align: center; margin: 40px 0; padding: 30px 0; border-top: 2px solid #e8e5e0;">
+    <button class="clear-all-btn" onclick="clearAllInputs()" style="font-size: 1.1rem; padding: 14px 32px;">
+      🗑️ Clear All Input Boxes
+    </button>
+  </div>
+
+  <!-- Prompts (Hidden) -->
   <script type="text/plain" id="prompt1">Here i am attaching the audio of sadhguru English Video.
     Can you first transcribe it first, and then create the telugu dubbing script for the same following the below guidelines?
         
@@ -1122,8 +1020,6 @@
     Note:
     If the source script is in tamil instead of english still the result should be in telugu. It is just that in this case we are translating from Tamil to Telugu.
     In the result, please give punctuated english script followed by punctuated telugu script.
-    
-    
     </script>
   <script type="text/plain" id="prompt2">Please break the given video scripts into paragraphs: 
     Keep continuous thoughts in one paragraph. 
@@ -1151,14 +1047,8 @@
     
     Please break both the source (English/Tamil) Script and the Translation (Telugu) script.
     
-    Below are the English and Telugu scripts for breaking into paragraphs:
-    
-    
-    
-    
-    </script>
-  <script type="text/plain" id="prompt3">	
-    Below is the Transcript and its Telugu translation of an English Talk by sadhguru addressing the audience.
+    Below are the English and Telugu scripts for breaking into paragraphs:</script>
+  <script type="text/plain" id="prompt3">Below is the Transcript and its Telugu translation of an English Talk by sadhguru addressing the audience.
 
     The talk is made up of blocks of points.
     Each point is made up of blocks of thoughts.
@@ -1680,176 +1570,339 @@ The <Bold> </Bold> tags are used here to let you know what portion needs to be b
 I see you gave the alternative section at the end of the paragraph. I want the alternatives to happen immediately after the optimized portion.
 
 Note: below i am giving the English and the Telugu scripts.
-
-
-
-
-
-
-
-
-
-
 </script>
 
-<script>
-  const message = document.getElementById('message');
+  <script>
+    const message = document.getElementById('message');
 
-  const descriptions = {
-    1: "Translation.",
-    2: "Breaking into Paragraphs.",
-    3: "Review."
-  };
-
-  const results = {
-    1: "Translated Script ",
-    2: "Paragraphs.",
-    3: "Final."
-  };
-
-  const stepNames = {
-    1: "Step One",
-    2: "Step Two",
-    3: "Step Three"
-  };
-
-  const aiNames = {
-    1: "Task A",
-    2: "Task B",
-    3: "Task C"
-  };
-  
-  function getPrompt(step) {
-    const promptElement = document.getElementById(`prompt${step}`);
-    if (promptElement) {
-      return promptElement.textContent.trim();
+    // --- SHARED UTILS ---
+    function getPrompt(step) {
+      const promptElement = document.getElementById(`prompt${step}`);
+      return promptElement ? promptElement.textContent.trim() : "";
     }
-    console.error(`Prompt for step ${step} not found!`);
-    return "";
-  }
-  
-  function handleClear(step) {
-    const box = document.getElementById(`input${step}`);
-    if (box) box.value = "";
-    showMessage("🗑️ Cleared Step " + step);
-  }
 
-  function clearAllInputs() {
-    for (let i = 1; i <= 3; i++) {
-        const inputBox = document.getElementById(`input${i}`);
-        if (inputBox) {
-            inputBox.value = "";
-        }
+    function showMessage(msg) {
+      message.innerHTML = `<span>${msg}</span>`;
+      message.classList.add('show');
+      clearTimeout(showMessage.timeout);
+      showMessage.timeout = setTimeout(() => { message.classList.remove('show'); }, 3000);
     }
-    showMessage("🗑️ All input boxes cleared");
-  }
 
-  function handleCopy(step) {
-    const inputBox = document.getElementById(`input${step}`);
-    const userInput = inputBox ? inputBox.value.trim() : "";
-    const finalText = getPrompt(step) + "\n\n" + userInput;
+    // --- STEP 1-3 LOGIC ---
+    const descriptions = {
+      1: "Translation.",
+      2: "Breaking into Paragraphs.",
+      3: "Review."
+    };
+    const results = {
+      1: "Translated Script ",
+      2: "Paragraphs.",
+      3: "Final."
+    };
+    const stepNames = {
+      1: "Step One",
+      2: "Step Two",
+      3: "Step Three"
+    };
+    const aiNames = {
+      1: "Task A",
+      2: "Task B",
+      3: "Task C"
+    };
 
-    navigator.clipboard.writeText(finalText).then(() => {
-      showMessage("📋 Prompt copied from Step " + step);
-    });
-  }
-
-  function showMessage(msg) {
-    message.textContent = msg;
-    message.classList.add('show');
-    clearTimeout(showMessage.timeout);
-    showMessage.timeout = setTimeout(() => {
-      message.classList.remove('show');
-    }, 3000);
-  }
-  
-  // Build UI dynamically
-  const container = document.getElementById('stepsContainer');
-
-  function createPart(title, steps, className) {
-    const partDiv = document.createElement('div');
-    partDiv.className = `part-section ${className}`;
-    partDiv.innerHTML = `<h3>${title}</h3>`;
-    steps.forEach(i => partDiv.appendChild(createStep(i)));
-    return partDiv;
-  }
-
-  // --- MODIFIED FUNCTION ---
-  // This function no longer creates Paste or Follow-up buttons.
-  function createStep(i) {
-    const stepDiv = document.createElement('div');
-    stepDiv.className = 'step';
-    
-    let copyButtonText = (i === 1) ? "📋 Copy Prompt (attach audio file)" : "📋 Copy Prompt";
-     
-    let textarea = ''; // Start with an empty string
-    if (i !== 1) { // If the step number is NOT 1...
-      // ...then create the textarea.
-      textarea = `<textarea id="input${i}" placeholder="Paste or type content for Step ${i}..."></textarea>`;
+    function handleClear(step) {
+      const box = document.getElementById(`input${step}`);
+      if (box) box.value = "";
+      showMessage("🗑️ Cleared Step " + step);
     }
-    
-    // The button group is now simplified.
-    let buttonGroup = `
-      <div class="button-group">
-        <button class="copy-btn" onclick="handleCopy(${i})">${copyButtonText}</button>
-        <button class="clear-btn" onclick="handleClear(${i})">🗑️ Clear</button>
-      </div>`;
 
-    stepDiv.innerHTML = `
-      <h3>
-        <span class="step-number">${i}</span>
-        <span>${stepNames[i]}</span>
-        <span class="ai-name">${aiNames[i]}</span>
-      </h3>
-      <div class="step-description"><strong>📋 Instructions:</strong> ${descriptions[i]}</div>
-      <div class="step-result"><strong>📤 Expected Output:</strong> ${results[i]}</div>
-      ${textarea}
-      ${buttonGroup}
-    `;
-    return stepDiv;
-  }
+    function handleCopy(step) {
+      const inputBox = document.getElementById(`input${step}`);
+      const userInput = inputBox ? inputBox.value.trim() : "";
+      const finalPrompt = getPrompt(step);
+      // If Step 1 (Audio attach) doesn't need userInput attached, just copy prompt.
+      // If Step 2/3 needs user input appended, we do that.
+      const textToCopy = (step === 1) ? finalPrompt : finalPrompt + "\n\n" + userInput;
 
-  // Append a single part with all 3 steps
-  container.appendChild(createPart("3 Step Workflow", [1, 2, 3], "part1"));
-
-  // --- Scroll to Top Button Logic ---
-  document.addEventListener('DOMContentLoaded', function() {
-    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-
-    if (scrollToTopBtn) {
-      window.onscroll = function() {
-        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-          scrollToTopBtn.classList.add("visible");
-        } else {
-          scrollToTopBtn.classList.remove("visible");
-        }
-      };
-
-      scrollToTopBtn.addEventListener('click', () => {
-        const firstPart = document.querySelector('.part1');
-        if (firstPart) {
-          firstPart.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showMessage("📋 Prompt copied from Step " + step);
       });
     }
-  });
-</script>
 
-<button id="scrollToTopBtn" title="Scroll to Top">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <polyline points="18 15 12 9 6 15"></polyline>
-  </svg>
-</button>
+    // Build Steps 1-3
+    const container = document.getElementById('stepsContainer');
 
-<!-- Bottom Clear All Button -->
-<div style="text-align: center; margin: 40px 0; padding: 30px 0; border-top: 2px solid #e8e5e0;">
-  <button class="clear-all-btn" onclick="clearAllInputs()" style="font-size: 1.1rem; padding: 14px 32px;">
-    🗑️ Clear All Input Boxes
-  </button>
-</div>
+    function createPart(title, steps, className) {
+      const partDiv = document.createElement('div');
+      partDiv.className = `part-section ${className}`;
+      // part-section styling is minimal in CSS, relying mostly on step styling
+      partDiv.style.borderRadius = "16px";
+      partDiv.style.marginBottom = "40px";
+      if(className === 'part1') partDiv.style.borderLeft = "5px solid #4a90e2";
+      
+      partDiv.innerHTML = `<h3 style="font-size:1.6rem; font-weight:700; margin-bottom:25px; text-align:center; padding-bottom:10px; border-bottom:2px solid rgba(0,0,0,0.1); color:#4a90e2">${title}</h3>`;
+      steps.forEach(i => partDiv.appendChild(createStep(i)));
+      return partDiv;
+    }
 
+    function createStep(i) {
+      const stepDiv = document.createElement('div');
+      stepDiv.className = 'step';
+      
+      let copyButtonText = (i === 1) ? "📋 Copy Prompt (attach audio file)" : "📋 Copy Prompt";
+      let textarea = (i !== 1) ? `<textarea id="input${i}" placeholder="Paste or type content for Step ${i}..."></textarea>` : '';
+
+      stepDiv.innerHTML = `
+        <h3>
+          <span class="step-number">${i}</span>
+          <span>${stepNames[i]}</span>
+          <span style="background:#f7f5f3; color:#8b7057; padding:6px 12px; border-radius:8px; font-size:0.8rem; margin-left:auto; border:1px solid #e8e5e0;">${aiNames[i]}</span>
+        </h3>
+        <div class="step-description"><strong>📋 Instructions:</strong> ${descriptions[i]}</div>
+        <div class="step-result"><strong>📤 Expected Output:</strong> ${results[i]}</div>
+        ${textarea}
+        <div class="button-group">
+          <button class="copy-btn" onclick="handleCopy(${i})">${copyButtonText}</button>
+          <button class="clear-btn" onclick="handleClear(${i})">🗑️ Clear</button>
+        </div>
+      `;
+      return stepDiv;
+    }
+
+    container.appendChild(createPart("3 Step Workflow", [1, 2, 3], "part1"));
+
+    // --- SUGGESTIONS LOGIC (Specific to Request) ---
+    
+    function handleClearSuggestions() {
+        const box = document.getElementById('input_suggestions');
+        if(box) box.innerHTML = "";
+        showMessage("🗑️ Suggestions box cleared");
+    }
+
+    // Global Clear All (Steps + Suggestions)
+    function clearAllInputs() {
+        for (let i = 1; i <= 3; i++) {
+            const inputBox = document.getElementById(`input${i}`);
+            if (inputBox) inputBox.value = "";
+        }
+        handleClearSuggestions();
+        showMessage("🗑️ All input boxes cleared");
+    }
+
+    // --- COMPLEX FORMATTING LOGIC FOR SUGGESTIONS ---
+    
+    // 1. Format Bold (Green) & Brackets (Yellow + Keep Brackets)
+    function formatBoldText() {
+        const box = document.getElementById('input_suggestions');
+        if (!box) return;
+
+        const boldColor = '#5CE65C'; // Green
+        const bracketColor = '#fff9c4'; // Yellow
+        let changedCount = 0;
+
+        // STEP 1: Process Square Brackets [text] -> Yellow Background (Wrap content)
+        const originalHTML = box.innerHTML;
+        const newHTML = originalHTML.replace(/(\[)((?:<[^>]+>|[^\]])*)(\])/g, (match, p1, p2, p3) => {
+            if (p2.includes('style="background-color: rgb(255, 249, 196)"') || p2.includes('style="background-color: #fff9c4"')) {
+                return match; 
+            }
+            changedCount++;
+            return `${p1}<span style="background-color: ${bracketColor}">${p2}</span>${p3}`;
+        });
+        
+        if (originalHTML !== newHTML) {
+            box.innerHTML = newHTML;
+        }
+
+        // STEP 2: Process Bold Tags -> Green AND UNBOLD (Unless inside Yellow)
+        const boldElements = box.querySelectorAll('b, strong');
+        boldElements.forEach(boldEl => {
+            if (boldEl.closest('table')) return; 
+            
+            // Check if inside yellow bracket span
+            const parent = boldEl.parentElement;
+            const isInsideYellow = parent && parent.tagName === 'SPAN' && 
+               (parent.style.backgroundColor === 'rgb(255, 249, 196)' || parent.style.backgroundColor === '#fff9c4');
+
+            if (isInsideYellow) return; // Keep bold, do nothing
+            
+            if(parent.tagName === 'SPAN' && parent.style.backgroundColor) return;
+
+            // Turn into Green Span AND Unbold
+            const span = document.createElement('span');
+            span.innerHTML = boldEl.innerHTML;
+            span.style.backgroundColor = boldColor;
+            boldEl.parentNode.replaceChild(span, boldEl);
+            changedCount++;
+        });
+
+        if (changedCount > 0) showMessage(`🎨 Formatted ${changedCount} items.`);
+        else showMessage("ℹ️ No new items found to format.");
+    }
+
+    // --- EVENT LISTENERS FOR SUGGESTIONS BOX (Paste & Keydown) ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const box = document.getElementById('input_suggestions');
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        // Scroll Button Logic
+        if (scrollToTopBtn) {
+            window.onscroll = function() {
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                    scrollToTopBtn.classList.add("visible");
+                } else {
+                    scrollToTopBtn.classList.remove("visible");
+                }
+            };
+            scrollToTopBtn.addEventListener('click', () => {
+                const firstPart = document.querySelector('.part1');
+                if (firstPart) firstPart.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+
+        if(!box) return;
+
+        // 1. Prevent Sticky Formatting (Smart Escape)
+        box.addEventListener('keydown', function(e) {
+            if (e.key === ' ' && !e.shiftKey && !e.ctrlKey) {
+                const sel = window.getSelection();
+                if (!sel.rangeCount) return;
+                
+                const range = sel.getRangeAt(0);
+                const node = range.startContainer;
+                let parent = (node.nodeType === 3) ? node.parentNode : node;
+                
+                const isFormatted = (el) => {
+                    if (!el) return false;
+                    const tag = el.tagName;
+                    if (tag === 'B' || tag === 'STRONG') return true;
+                    if (tag === 'SPAN' && el.style.backgroundColor) return true;
+                    return false;
+                };
+
+                let formattedParent = null;
+                if (isFormatted(parent)) formattedParent = parent;
+                else formattedParent = parent.closest('b, strong, span[style*="background-color"]');
+
+                if (formattedParent && isFormatted(formattedParent)) {
+                    const isAtEnd = (range.endOffset === node.textContent.length);
+                    if (isAtEnd) {
+                        e.preventDefault(); 
+                        const space = document.createTextNode(' ');
+                        if (formattedParent.nextSibling) formattedParent.parentNode.insertBefore(space, formattedParent.nextSibling);
+                        else formattedParent.parentNode.appendChild(space);
+                        
+                        const newRange = document.createRange();
+                        newRange.setStart(space, 1); 
+                        newRange.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(newRange);
+                    }
+                }
+            }
+        });
+
+        // 2. PASTE LOGIC (Guarantees "As Is", Prevents Whole-Text Bold)
+        box.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const clipboardData = e.clipboardData || window.clipboardData;
+            const pastedHtml = clipboardData.getData('text/html');
+            const pastedText = clipboardData.getData('text/plain');
+
+            const tempRenderDiv = document.createElement('div');
+            if (pastedHtml) tempRenderDiv.innerHTML = pastedHtml;
+            else tempRenderDiv.innerText = pastedText;
+
+            // Recursive Cleaner
+            function rebuildClean(node, isRoot = false) {
+                if (node.nodeType === 3) return document.createTextNode(node.textContent);
+                if (node.nodeType === 1) {
+                    const tagName = node.tagName.toLowerCase();
+                    const style = window.getComputedStyle(node);
+                    
+                    if (['table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'].includes(tagName)) {
+                        const newEl = document.createElement(tagName);
+                        if (node.hasAttribute('colspan')) newEl.setAttribute('colspan', node.getAttribute('colspan'));
+                        if (node.hasAttribute('rowspan')) newEl.setAttribute('rowspan', node.getAttribute('rowspan'));
+                        Array.from(node.childNodes).forEach(child => newEl.appendChild(rebuildClean(child)));
+                        return newEl;
+                    }
+
+                    const fontWeight = parseInt(style.fontWeight);
+                    let isBold = (tagName === 'b' || tagName === 'strong' || fontWeight >= 700);
+                    if (isRoot) isBold = false; // Strip root bold
+
+                    const childFragment = document.createDocumentFragment();
+                    let hasBlockChildren = false;
+                    Array.from(node.childNodes).forEach(child => {
+                        const rebuilt = rebuildClean(child, false);
+                        if (rebuilt.nodeType === 1 && ['div','p','table','br'].includes(rebuilt.tagName.toLowerCase())) {
+                            hasBlockChildren = true;
+                        }
+                        childFragment.appendChild(rebuilt);
+                    });
+
+                    if (isBold && !hasBlockChildren) {
+                        const b = document.createElement('b');
+                        b.appendChild(childFragment);
+                        return b;
+                    }
+
+                    const isBlock = (style.display === 'block' || tagName === 'p' || tagName === 'div' || tagName === 'br');
+                    if (tagName === 'br') return document.createElement('br');
+                    if (isBlock) {
+                        const div = document.createElement('div');
+                        div.appendChild(childFragment);
+                        return div;
+                    }
+                    return childFragment;
+                }
+                return document.createDocumentFragment();
+            }
+
+            tempRenderDiv.style.position = 'absolute';
+            tempRenderDiv.style.left = '-9999px';
+            document.body.appendChild(tempRenderDiv);
+            
+            const cleanFragment = rebuildClean(tempRenderDiv, true);
+            document.body.removeChild(tempRenderDiv);
+
+            const selection = window.getSelection();
+            if (selection.rangeCount) {
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                
+                // SPLIT BOLD TAGS Logic
+                let container = range.startContainer;
+                if (container.nodeType === 3) container = container.parentNode;
+                const boldParent = container.closest('b, strong');
+
+                if (boldParent) {
+                    const rangeAfter = document.createRange();
+                    rangeAfter.setStart(range.endContainer, range.endOffset);
+                    rangeAfter.setEndAfter(boldParent.lastChild);
+                    const contentAfter = rangeAfter.extractContents();
+                    
+                    const insertRange = document.createRange();
+                    insertRange.setStartAfter(boldParent);
+                    insertRange.collapse(true);
+                    insertRange.insertNode(cleanFragment);
+                    
+                    if (contentAfter.textContent.length > 0) {
+                        const newBold = document.createElement('b');
+                        newBold.appendChild(contentAfter);
+                        const marker = document.createTextNode('');
+                        insertRange.insertNode(marker);
+                        marker.parentNode.insertBefore(newBold, marker);
+                        marker.parentNode.removeChild(marker);
+                    }
+                } else {
+                    range.insertNode(cleanFragment);
+                }
+                range.collapse(false);
+            }
+        });
+    });
+  </script>
 </body>
 </html>
