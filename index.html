@@ -2190,15 +2190,16 @@
       const stepDiv = document.createElement('div');
       stepDiv.className = 'step';
       
-      let copyButtonText = "📋 Copy Prompt (attach audio file)";
+      let copyButtonText = "⁠Translation Prompt";
       let textarea = ''; // No textarea in Step 1
 
       // Add extra buttons for Step 1
       let extraButtons = "";
       if (i === 1) {
         extraButtons = `
-          <button class="copy-btn" onclick="handleSplitCopy()">split in paras</button>
-          <button class="copy-btn" onclick="handleAiReviewCopy()">ai review</button>
+          <button class="copy-btn" onclick="handleSplitCopy()">Meaning and Language Tuning Prompt
+</button>
+          <button class="copy-btn" onclick="handleAiReviewCopy()">AI Review Prompt</button>
         `;
       }
 
