@@ -6,15 +6,12 @@
   <style>
     /* --- THEME VARIABLES --- */
     :root {
-      /* Theme Colors */
       --bg-main: #faf9f7;
       --bg-container: #ffffff;
       --text-main: #5d5043;
       --accent-brown: #8b7057;
       --accent-light: #c4a484;
       --border-color: #e0d5c7;
-      
-      /* Logic Colors for Suggestions */
       --highlight-green: #5CE65C;
       --highlight-yellow: #fff9c4;
     }
@@ -91,22 +88,10 @@
     .copy-btn { border-color: #b8a990; background: #f7f5f3; }
     .clear-btn { border-color: #d4c4a8; color: #a0916d; background: #faf9f7; }
     
-    /* Special format button for suggestions */
     .btn-format { background-color: #e8f9f5; color: #20c997; border-color: #b2f5ea; }
     .btn-format:hover { background-color: #d1f3e9; }
 
-    /* --- TEXT AREAS (Steps 2 & 3) --- */
-    textarea {
-      width: 100%; height: 160px; font-size: 14px; padding: 16px;
-      white-space: pre-wrap; resize: vertical; margin: 12px 0;
-      border: 1px solid var(--border-color); border-radius: 12px;
-      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
-      background: #fefdfb; color: var(--text-main);
-      transition: all 0.2s ease;
-    }
-    textarea:focus { outline: none; border-color: var(--accent-light); background: #ffffff; }
-
-    /* --- CONTENT EDITABLE (Suggestions Box) --- */
+    /* --- CONTENT EDITABLE --- */
     .editable {
       width: 100%; min-height: 200px; max-height: 500px;
       overflow-y: auto; font-size: 14px; padding: 16px;
@@ -117,13 +102,6 @@
     }
     .editable:focus { outline: none; border-color: var(--accent-light); background: #ffffff; box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1); }
     
-    /* Suggestions Table Styling */
-    .editable table { width: 100%; border-collapse: collapse; margin: 1em 0; border: 1px solid var(--border-color); }
-    .editable td, .editable th { border: 1px solid var(--border-color); padding: 8px; vertical-align: top; }
-    .editable th { background-color: #f1f3f5; font-weight: 700; }
-    .editable b, .editable strong { font-weight: 700; }
-    .editable:empty:before { content: attr(data-placeholder); color: #b8a990; }
-
     /* --- STEP CONTAINERS --- */
     .step, .suggestions-section {
       background: #ffffff; padding: 28px; margin-bottom: 24px;
@@ -147,20 +125,17 @@
     .step-icon-green { background: #20c997; }
 
     .step-description {
-      background: #f9f7f4; color: #6b5b47; font-size: 0.95rem; margin-bottom: 14px;
+      background: #f9f7f4; color: #6b5b47; font-size: 0.95rem; margin-top: 20px;
       padding: 16px 18px; border-radius: 10px; border-left: 3px solid var(--accent-light);
     }
     .step-result {
-      background: #f5f2ee; color: #7a6b56; font-size: 0.95rem; margin-bottom: 16px;
+      background: #f5f2ee; color: #7a6b56; font-size: 0.95rem; margin-top: 12px;
       padding: 16px 18px; border-radius: 10px; border-left: 3px solid #a08967;
     }
 
-    /* --- UTILS --- */
-    .button-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+    .button-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
     .clear-all-container { text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 1px solid #e8e5e0; }
     
-    hr { border: none; height: 1px; background: #e8e5e0; margin: 30px 0; }
-
     #message {
       position: fixed; top: 24px; right: 24px; background: #ffffff; color: var(--text-main);
       padding: 14px 20px; border-radius: 12px; font-weight: 500;
@@ -178,12 +153,10 @@
       box-shadow: 0 5px 15px rgba(139, 112, 87, 0.3); transition: all 0.3s ease;
     }
     #scrollToTopBtn.visible { opacity: 1; visibility: visible; pointer-events: auto; }
-    #scrollToTopBtn:hover { transform: translateY(-3px); background-color: #5d5043; }
 
     @media (max-width: 768px) {
       body { padding: 15px; }
       .container { padding: 25px; }
-      .button-group { flex-direction: column; }
       button { width: 100%; }
     }
     script[type="text/plain"] { display: none; }
@@ -210,23 +183,19 @@
         <span class="step-number step-icon-green">2</span>
         <span>Suggestions & Review</span>
       </h3>
-      <div class="step-description">
-        <strong>📋 Instructions:</strong> Enter specific suggestions or review points here. 
-        Use the <strong>Format Bold</strong> button to highlight bold text (Green) and bracketed text [like this] (Yellow).
-        <br><br>
-       
-      </div>
-      
-      <!-- Content Editable Div for Formatting Logic -->
       <div id="input_suggestions" class="editable" contenteditable="true" data-placeholder="Paste or type your review notes here..."></div>
       
       <div class="button-group">
-        <!-- Special Format Button -->
         <button class="btn-format" onclick="formatBoldText()">
-            <svg xmlns="http://www.w.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
             Format Bold
         </button>
         <button class="clear-btn" onclick="handleClearSuggestions()">🗑️ Clear</button>
+      </div>
+
+      <div class="step-description">
+        <strong>📋 Instructions:</strong> Enter specific suggestions or review points here. 
+        Use the <strong>Format Bold</strong> button to highlight bold text (Green) and bracketed text [like this] (Yellow).
       </div>
     </div>
 
@@ -234,19 +203,13 @@
   </div>
 
   <button id="scrollToTopBtn" title="Scroll to Top">
-    <svg xmlns="http://www.w.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="18 15 12 9 6 15"></polyline>
     </svg>
   </button>
 
-  <div style="text-align: center; margin: 40px 0; padding: 30px 0; border-top: 2px solid #e8e5e0;">
-    <button class="clear-all-btn" onclick="clearAllInputs()" style="font-size: 1.1rem; padding: 14px 32px;">
-      🗑️ Clear All Input Boxes
-    </button>
-  </div>
-
   <!-- Prompts (Hidden) -->
-  <script type="text/plain" id="prompt1">I am attaching the audio of a sadhguru discourse to the audience.
+  <script type="text/plain" id="prompt_initial">I am attaching the audio of a sadhguru discourse to the audience.
     I want you to first transcribe the same and then translate it to telugu as per the below guidelines.
     
     
@@ -720,18 +683,20 @@
     
     End of example.
     
+    Note: if it's an interactive conversation rather than a discourse, then give the speaker headings to differentiate who is speaking. when sadhgur says ‘you’ translate it as plural not singular. 
     
-    
-    
-    
+    Note: After you transcribe and translate according to above guidelines, First give the blockwise English Transcription and then give the telugu translation in the result. no need to give any other additional details. 
     </script>
-  <script type="text/plain" id="prompt_split">
+  <script type="text/plain" id="prompt_finetune">
 
 
     Meaning and language Tuning:
     
-    Now that you have transcribed and translated the audio to telugu, in this step i wan you to focus on the tuning of the translation.
+    Now that you have transcribed and translated the audio to telugu, in this step I want you to focus on the tuning of the translation.
     Can you finetune the telugu dubbing script following the below guidelines?
+    
+    Do not mistake the example script for the target script.
+    
     
     Translation Need 1:
     Creating Telugu Script:
@@ -1441,7 +1406,7 @@
     ఆ ఆధిపత్యం ఉంటుంది.
     
     
-    < Full Example start > 
+    < The below is an example script for you to understand how a sample script is optimized. this in not the target script that needs to be optimized.> 
     input English Transcription:
     The forces working upon... life upon this planet varies... from one latitude to another.
     Because of a certain shape and a form it takes... it could become differently competent.
@@ -1733,17 +1698,301 @@
     ఇంకా మిగతావి ఎక్కడి నుండి వస్తాయో తెలీదు.
     రవాణా సౌకర్యం ఉంది కదా అని... ప్రపంచాన్ని అమ్మే సూపర్ మార్కెట్లు ఉన్నాయి కదా అని... మనం ఇది చేస్తున్నాం...
     ఇదంతా ఆనందం కోసమే... ఆరోగ్యం కోసం కాదు.
-    < Full Example end > 
+    < The above is an example script for you to understand how a sample script is optimized. this in not the target script that needs to be optimized.> 
     
+    Now I want you to optimize the translation you made from the audio provided at the beginning. 
+    Note: After you optimize the script according to above guidelines, just give the optimized Telugu script. No need to give any additional information.
     
-    
-        
-        
-        
-    In the result please give the transcribed english script in the same blocks of thoughts structure, and then give the polished telugu script. No need to give the original translation script and any other additional information. 
     </script>
-  <script type="text/plain" id="prompt_ai_review">Now I want you to review the dubbing script at the most detail level in the below areas.
+  <script type="text/plain" id="prompt_paragraphs">Now one more step to perform on the Telugu translation.
 
+
+    The translation has been so good. Now in this step, do not redo or retouch the translation. All we have to do now is to convert this line by line type script into a paragraph by paragraph script.
+    
+    Sadhguru does not speak in grammatically complete sentences.
+    He speaks in:
+    thought units
+    idea chunks
+    pause-driven fragments
+    
+    Remember that we have used ! to indicate the unnatural ending as per the sadhguru style.
+    and … to indicate the pauses between the fragments.
+     
+    Let me explain the target with an analogy.
+    Let's take a human body.
+    It is made of various body parts like - face, hands, torso, legs
+    and now each body part is made of various subparts. Example: face has eyes, nose, mouth, ears.
+    And each sub part has various internal parts. Example: eye has eyeball, eyelids.
+    And each internal part has building parts. Example: eyeball has white eyeball and black eyeball.
+    
+    Now using this analogy, I want to punctuate the script.
+    
+    Each paragraph block is one body part - like face, head, torso, legs, etc
+    Each complete point within a paragraph is like a subpart within a body part - like eye, hands, etc
+    Each thought unit that makes up the point within the idea is like an internal part within a subpart.
+    Each fragment that makes up the idea chunk is like a building part.
+    
+    Now I want to indicate this mapping using paragraphs, semicolons, and hyphens.
+    
+    we connect building parts with … to make up the internal part.
+    we connect the internal parts with - to make up the subpart.
+    we connect the subparts with ; to make up the body part.
+    
+    for example, the script should be punctuated like this:
+    
+    building part …  building part (one internal part)- another internal part - one more internal part; internal part - building part …  building part (another internal part); 
+    
+    
+     internal part -  building part …  building part (one internal part)
+    
+    
+    subpart; subpart; internal part - internal part; building part…building part…building part; subpart
+    
+    
+    
+    let me give another analogy also.
+    Lets say what we want to convey is a picture.
+    And how sadhguru conveys is,
+    
+    puzzle pieces of ‘Color A’ when joined will picturize the eyeball. Here the puzzle pieces can be taken as the white and the black eyeballs. these are joined with …
+    Similarly puzzle pieces of ‘Color B’  when combined will form the eye lid. Here the pieces can be taken as the skin of the eyelid and the hair of the eyelid.  these are joined with …
+    Now the ‘Color A’ set   and the ‘Color B’ set are joined by using hyphen. 
+    thus it picturizes one part of the face (which is one para here). Similarly lets say the nose is made. Now we join the eye and the nose with semicolon. and again join the ear to these using a semicolon. Thus the face is completed (which is one paragraph here)
+    
+    Similarly we will construct the remaining parts in paragraphs, thus making up to the body.
+    
+    
+    Below are the additional scenarios to consider:
+    
+       Use a dash ( - ):
+        To Set Off Parenthetical Information:
+        Example: This is a very important point - one that you shouldn't forget.
+        Example: The students - all 35 of them - were excited for the field trip.
+    
+        To Introduce a List:
+        Example: She bought many things - clothes, shoes, and accessories.
+    
+       To Introduce an additional Explanation after completion of one thought:
+        Example: The reason for the delay - traffic congestion - was unavoidable.
+        Example: He is my uncle - who is a 7 feet tall man.
+        Example: Today is Sunday - which is a holiday.
+    
+        To Indicate an Abrupt Break or Change in Thought:
+        Example: I was about to leave - wait, there's someone at the door.
+     
+       To Emphasize a Word or Phrase:
+        Example: The most important thing - and I can't stress this enough - is to be yourself.
+    
+    Another situation:
+    When a phrase completes, clarifies, or defines a key concept or item mentioned immediately before it,
+    replace the punctuation before that phrase with a hyphen ( - ).
+    
+    Use this specifically when:
+    
+    The phrase reveals the actual components of a previously stated category
+    (e.g., “two things — your body and your mind”)
+    
+    Here, the tone must land and conclude the meaning, not continue a list; The phrase is not a new point but the completion of the same point.
+    
+    
+    
+       Use a semi colon ( ; ):
+    Between similar kinds of sentences use semi colon instead of a full stop. 
+    
+    Example:
+    If you say Dhyanalingam, they'll say Dhyanaling;  If you say Shiva, they'll say Shiv; If you say Rama, they'll say Ram.
+    
+    
+    Between sentences that are the part of one idea then use semi-colons between them instead of a fullstop.These are full complete sentences, not simply clauses.
+    Example: 
+    I love to read; books transport me to different worlds; But they are not readily available here. 
+    
+       Use an exclamation ( ! ):
+    
+    To mark the ending of half sentences which is okay in spoken telugu and make sense with proper modulation. These are not grammatically correct endings, but in spoken language they convey the correct meaning with sharp ending in modulation.
+    
+    Example:
+    మీ చుట్టూ ఉన్న ప్రతీదానిపై సంపూర్ణ శ్రద్ధతో ఉంటే, అప్పుడు తెలుస్తుంది, ఇక్కడ జరుగుతున్నది ఒక మామూలు విషయం కాదని! జీవపరంగా! 
+    
+       Use an eclipse ( … ):
+    to represent the pauses. These are already marked in the sense unit lines. Preserve them in the result, except the ones that occur at the end of the sense unit lines.the ones that occur at the end can be replaced with , ; - ? as per the context of the talk at that point of time and as per the above mentioned rules.
+    
+    Example:
+    Sense unit line 1 of a thought: ఒకరు తమలో తాము... సరిగ్గా వ్యవస్థీకృతంగా లేకపోతే...
+    Sense unit line 2 of a thought: అప్పుడు ఒంటరిగా ఉండటం చాలా కష్టం.
+    
+    Thought made into one sentence: ఒకరు తమలో తాము... సరిగ్గా వ్యవస్థీకృతంగా లేకపోతే, అప్పుడు ఒంటరిగా ఉండటం చాలా కష్టం.
+    Description:
+    here the … that happens in the middle of the sense line is preserved and the one that occurs at the end of the first line is changed to , This is because, at the end of the sense until line anyway a natural pause occurs. 
+    
+    Below i am giving some example sentences where i have used this way.
+     మన తల్లుల గర్భకోశాలు... ప్రపంచంలోని స్త్రీలందరూ కూడా ... మన తల్లులు, 28 రోజుల చక్రాల గుండా వెళ్తారు - ఆరోగ్యంగా ఉంటే! 
+    
+    
+    Description: 
+    eclipse to preserve the pause marks
+    hyphen to set off additional information
+    Exclamation to mark un grammatical ending with spoken modulation.
+    
+    
+    క్షమించండి, గర్భధారణ జరుగుతుంది... ఆ తర్వాత - ముతకగా చెప్పాలంటే - కేవలం మాంసపు ముద్దగా ఉన్నది, జీవంగా మారడానికి  ... 40 నుండి 42 రోజులు పడుతుంది. 
+    Description: 
+    eclipse to preserve the pause marks
+    hyphen to set off additional information
+    Exclamation to mark un grammatical ending with spoken modulation.
+    
+    
+    ఎంతోమంది ప్రజల్ని చూసి చెబుతారు - ఈ వ్యక్తి ఈ గడువును దాటి బ్రతకడని! - అది అలాగే జరుగుతుంది కూడా!
+    
+    
+    Description: 
+    hyphen to set off additional information
+    Exclamation to mark un grammatical ending with spoken modulation.
+    
+    
+    కానీ సహజ మారణం గుండా వెళ్ళబోతున్న వారికి ... 40 రోజులేంటి, అంతకంటే చాలా ముందే చెప్పొచ్చు. చాలా ముందే! 
+    Description: 
+    eclipse to preserve the pause marks
+    , to join sense unit lines.
+    Exclamation to mark un grammatical ending with spoken modulation.
+    
+    
+    కాబట్టి ఈ చంద్ర దేవాలయం, పేరు చూసి చెబుతున్నాను - నేను గుడి చూడలేదు, అదేంటో నాకు తెలీదు - కానీ పేరును చూస్తే, ఒకవేళ అది అలాంటి చక్రీయ ప్రక్రియ కోసం ఏర్పాటు చేయబడితే - అలానే చేసి ఉండవచ్చు - దాన్ని అలా ప్రతిష్టించి ఉంటే... అది ఒక సాధనం కావచ్చు... అది తెలుసుకోవడానికి. 
+    Description: 
+    eclipse to preserve the pause marks
+    hyphen to set off additional information
+    కాబట్టి అది బహుశా చాలా ఉపయోగకరమైన సాధనం అయి ఉండవచ్చు - ఒకప్పుడు అది ఫలితాలనిచ్చే సాధనం అయితే! అయ్యుంటుందని నమ్ముతున్నాను.
+    
+    
+    Description: 
+    hyphen to set off additional information
+    Exclamation to mark un grammatical ending with spoken modulation.
+    కాశీ ఒక ఆహ్వానం; మీరు వస్తారా రారా అన్నది మీ ఇష్టం. ప్రతీ ప్రతిష్ఠిత స్థలం ఓ ఆహ్వానం - ఆ పార్శ్వాన్ని కోరుకునే వారికి! 
+    
+    
+    Description: 
+    semi-colon to join two sense unit lines that make up on big picture idea.
+    hyphen to set off additional information
+    Exclamation to mark un grammatical ending with spoken modulation.
+    Multiple attributes or multiple details:
+    కానీ ఇది మొదలైనప్పుడు - అవ్యక్తంగా ఉన్నది, వ్యక్తమవడం మొదలైనప్పుడు - మొట్టమొదట వచ్చిన రూపం దీర్ఘవృత్తాకార గోళం. 
+    multiple details:
+    చూడండి అంతా అవ్యక్తంగా ఉన్నప్పుడు - ఎలాంటి భౌతిక రూపం లేనప్పుడు - అది వ్యక్తమవడం మొదలైనప్పుడు, మొట్టమొదట వచ్చిన శక్తి రూపం... ఒక... 
+    additional phrase:
+    
+    ‘దీర్ఘవృత్తాకార వృత్తం’ అంటే ఒకచోట వ్యాసార్థంగా ఉన్నది మరోచోట వ్యాసంగా ఉంటుంది - చాలా సరళంగా చెప్పాలంటే! 
+    
+    
+    hiphen while picturizing you are adding another detail block to the picture separate it with hyphen:
+     ఎందుకంటే, ప్రకృతి శక్తులు అలా ఉంటాయి - మీరు ఒక నిర్దిష్ట శక్తిని సృష్టిస్తే, సహజంగానే ఒక దీర్ఘవృత్తం ఏర్పడుతుంది. 
+    
+    
+    hiphen to seperate a different puzzle piece of the picture:
+    
+    
+    చూడండి ఇప్పుడు, నేను ఈ చెక్క ముక్కను శక్తివంతం చేయగలను - అది ఇప్పుడు అద్భుతంగా అనిపించవచ్చు, కానీ కొంత సమయం తర్వాత, అది నిలవదు. 
+    
+    
+    after  one idea is landed and another detail is added to the picture:
+    
+    
+    అందుకే ప్రతీ మహాశివరాత్రికీ, ప్రజలు దానిపై కొన్ని పువ్వులు చల్లుతారు - ఎందుకంటే ఆ మూడు సమాధుల కింద ఒక శకలం ఉందని నమ్ముతారు.
+    
+    
+    
+    
+    aspect and object:
+    
+    
+    ప్రపంచంలో కట్టబడిన మొదటి నగరం -  బహుశా వారణాసి. 
+    
+    puzzle pieces hyphen,  ideas expansion semicolon:
+    
+    
+    Sadhguru:  అవును, నిజానికి అది అవిముక్తేశ్వరుడిగా ఉండాల్సింది - దండయాత్రల నుండి కాపాడటానికి దానికి పేరు మార్చారని అంటారు; నాకు కచ్చితంగా తెలీదు, కానీ కొంతమంది... కొంతమంది చరిత్రకారులు తమ పుస్తకాలలో అలా చెబుతున్నారు.
+    puzzle pieces hyphen, ideas expansion semicolon:
+    గత ఆరు, ఏడు శతాబ్దాలలో ఇది సుమారు మూడుసార్లు పూర్తిగా నేలమట్టమైంది - దాన్ని మళ్ళీ మళ్ళీ నిర్మించారు; కానీ ఇప్పుడు దాని అసలు స్థానంలో పునర్నిర్మించలేరు - ఎందుకంటే అక్కడ మరో నిర్మాణం ఉంది. 
+    Subject phrase and its remaining sentnce:
+    
+    
+    
+    
+    కాబట్టి ఇప్పుడు విశ్వనాథుడు - ఆలయం అంచున, పరిధిలో ఉన్నాడు. ఇదొక దురదృష్టకరమైన వాస్తవికత.
+    Subject phrase and its remaining sentnce:
+    అంటే విరిగింది లేదా విరగొట్ట బాదుతూ వస్తున్నది - చుట్టూ ఉన్న నిర్మాణమా... 
+    
+    
+    
+    
+    
+    
+    declaration and detailing:
+    కానీ ఉద్దేశం ఒకటేనా? అవును, ఎప్పుడూ ఉద్దేశం ఒకటే - ఒక ఆధ్యాత్మిక సాధనాన్ని అందుబాటులో ఉంచాలని! 
+    connected but totally a different detail from the present idea. present idea fully established. this is a totally different picture that has a relation to this picture:
+    అందుకే మేము భైరవిని లింగభైరవిగా సృష్టించాం; భౌతిక శ్రేయస్సు కోరుకునేవారు, అక్కడికి వెళ్తారు. 
+    
+    
+    main idea part a - its explanation - main idea part b:
+    
+    అది అవసరమే, కానీ అదే ఏకైక లక్ష్యం అయితే - ప్రజలు ధ్యానలింగానికి వెళ్లడం మానేసి, కేవలం దేవి ఆలయానికే వెళ్లడం మొదలుపెడితే , ఆర్థిక లేదా భౌతిక శ్రేయస్సు కోసం - అప్పుడు మేము ఆమె లభ్యతను పరిమితం చేస్తాం. ధ్యానలింగం 365 రోజులూ తెరిచే ఉంటుంది, ఎప్పుడూ!
+    main idea - explanation or examples:
+     అవును, మీరు కట్టారు, ఇంకా మీరు, ఇదిగో, ఇది తీసుకోవచ్చు, అది తీసుకోవచ్చు -  కాజు తీసుకోవచ్చు, కిస్మిస్ తీసుకోవచ్చు - పగలు తీసుకోవచ్చు, రాత్రి తీసుకోవచ్చు’ అన్నారు. 
+    
+    declaration - then detailing:
+    నేను భౌతిక శ్రేయస్సు కోసం సాధనాలను ఎందుకు అందిస్తున్నానంటే, ఇది నా నమ్మకం - భౌతిక శ్రేయస్సు ఉంటే, మీకు ఆధ్యాత్మిక ప్రక్రియకు సమయం ఉంటుందని.
+    totally different piece of the same idea:
+    మీరు మీ రోజువారీ భౌతిక శ్రేయస్సుతో సతమతమవుతుంటే, మిమ్మల్ని ధ్యానం చేయమని అడగడం ఎలా? -  మీరు ఎప్పుడూ నాకు సమయం లేదు, సమయం లేదు అంటారు. కాబట్టి దేవి మీకు కొంత సమయం ఇస్తుందని అనుకున్నాను. 
+    idea part a - additional detail of part a - idea part b:
+     ఎందుకంటే మొత్తం ప్రపంచం, మొత్తం ప్రపంచాన్ని చూస్తే - ప్రపంచంలో ఎక్కడైనా, ఒక్క ప్రదేశంలో కాదు - ప్రపంచంలోని ప్రార్థనలు ఏంటి?
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    More such examples:
+    Juhi: సాకని కాదు; నేను చెప్పేది... నేను క్రితం సారి వచ్చాను, దాన్ని వేరే కోణంలో చూశాను; ఈసారి వచ్చాను, దాన్ని లోతైన రీతిలో చూస్తున్నాను; నేను దాన్ని విభిన్నంగా అనుభూతి చెందుతున్నాను; నా ప్రశ్న ... అది ... ఫలానా సమయంలో ... ప్రతిదానికీ ఒక సమయం ఉంటుంది, అది మీ వద్దకు వస్తుంది. దాని కోసం మీరు ప్రయాస పడాల్సినవసరం లేదు.
+    Sadhguru: ఆ... చూడండి... సంవత్సరంలో రుతువులు ఉంటాయి. మీరు కొన్ని చెట్లను, మొక్కలను వేసవిలో పూయించలేరు - అది వసంతంలోనే జరుగుతుంది - చలికాలంలో జరగదు. 
+    కాబట్టి... రుతువులున్నాయి - ఈ గ్రహం యొక్క జీవ చక్రంలో... వ్యక్తిగత మానవుల జీవ చక్రంలో రుతువులు ఉన్నాయి. 
+    
+    
+    చూడండి, మిగతా జీవులన్నీ - కొన్ని జీవులు తప్ప - మిగతా జీవులన్నీ ... ఎప్పుడు పునరుత్పత్తి చేయాలనేది కూడా ప్రకృతి సూత్రం ప్రకారమే.
+    మనకు స్వేచ్ఛ ఇవ్వబడింది - ప్రతిదాన్నీ మనం స్పృహతో నడుపుకుంటామనే ఉద్దేశంతో!
+    
+    
+    ఎందుకంటే మానవుడిగా ఉండటమంటే ఇదే... మీ విధి పూర్తిగా మీ చేతుల్లో ఉండగలదు - మీరు కొన్ని మౌలిక విషయాలను మీ చేతుల్లోకి తీసుకుంటే! 
+    Juhi: నేను, ‘కాశీ మిమ్మల్ని పిలుస్తుందా?’ అన్నప్పుడు,  నేను నిజానికి ఇది కూడా అడుగుతున్నాను - జీవితంలో... మీరు పనులు చేయాలా? మీరు నిర్ణయాలు తీసుకోవాలా?  లేదా, దాని సమాయానికి అది జరగాలని ఉంటుందా? ఆ సమయానికి అది ఎలాగూ జరుగుతుందా?
+    Note: After you punctuate the script according to above guidelines, just give the optimized Telugu script. (Optimize the english also into paragraphs as per above rules, but in result only give the telugu, no need to give english. )No need to give any additional information.
+    
+    
+    </script>
+  <script type="text/plain" id="prompt_review">Now I want you to review the above punctuated dubbing script you gave in the previous reply - at the most detailed level in the below areas. 
+
+    important notes: 
+    
+    Sadhguru does not speak in grammatically complete sentences.
+    He speaks in:
+    thought units
+    idea chunks
+    pause-driven fragments
+    
+    Here paragraph splitting, semicolons (;) and hyphens (-) and eclipses (…) are used to hint modulation cues to dubbing artists - not for grammar purposes. Please preserve them as it is, don't change them. Maintaining the same paragraph structure, and same punctuations. do not retouch those optimized areas. just focus on the below areas only. 
+    
     Contextual word.
     
     In the English language, each word covers a broad spectrum and multiple contexts. But when it come to telugu, with in the same spectrum that is covered by the english word there are multiple specific telugu words each one covering a specific part of the spectrum, and similarly in telugu there will be specific words for each context that is covered by a single word in English.
@@ -2206,26 +2455,80 @@
     
     
     
+    Bringing the verb part to the end of the sentence while quoting someones words or while expressing internal thought process.
+    
+    Example:
+    
+    Original : వాళ్ళు <T3> అనుకుంటున్నారు<T3> ఇప్పుడు ఆధ్యాత్మికత అంటే మీరు హిమాలయాలకు వెళ్ళాలి లేదా కాశీకి వెళ్ళాలి... లేదా మీరు అన్నీ వదిలేయాలి అని
+    
+    optimized : వాళ్ళు “ఇప్పుడు ఆధ్యాత్మికత అంటే మీరు హిమాలయాలకు వెళ్ళాలి లేదా కాశీకి వెళ్ళాలి... లేదా మీరు అన్నీ వదిలేయాలి” అని <T3>అనుకుంటున్నారు<T3> 
+    
+    description:
+    Here the structure is subject then comma then the thought or the words spoken by the subject in quotes then the verb that conveys saying or thinking and then period or question mark or other punctuation as per the need. Remember the … and - and ; within the quoted portion are still preserved.
+    
+    
+    Example:
+    Original 
+    ప్రతీ ఒక్కరూ <T3> అడుగుతున్నారు<T3> , "సద్గురు మీరెందుకు దీనిపై మీ తల బద్దలు కొట్టుకుంటున్నారు?"
+    
+    optimized :
+    ప్రతీ ఒక్కరూ, "సద్గురు మీరెందుకు దీనిపై మీ తల బద్దలు కొట్టుకుంటున్నారు?" అని <T3> అడుగుతున్నారు<T3> . 
+    
+    
+    description:
+    Here the structure is subject then comma then the thought or the words spoken by the subject in quotes then the verb that conveys saying or thinking and then period or question mark or other punctuation as per the need. Remember the … and - and ; within the quoted portion are still preserved.
+    
+    
+    Example:
+    Original 
+    <T3>నేనన్నాను<T3>, వాళ్ళకి తాగడానికి నీళ్ళు లేకపోతే... వాళ్ళని ధ్యానం చేయమని నేను ఎలా చెప్పగలను?
+    
+    
+    Optimized:
+    
+    <T3>నేను<T3>, “వాళ్ళకి తాగడానికి నీళ్ళు లేకపోతే... వాళ్ళని ధ్యానం చేయమని నేను ఎలా చెప్పగలను?” <T3>అన్నాను<T3>
+    
+    description:
+    Here the subject who spoke and the verb that conveys the speaking are in one word. we have separated them, and placed the subject before the quoted part and the verb after the quoted part.
+    
+    
+    Original:
+    ప్రజలు నన్ను <T3>అడుగుతూనే ఉంటారు<T3>, "సద్గురు, ఈ దేశంలో ఆధ్యాత్మిక ప్రక్రియను పునరుద్ధరించడానికి మార్గం ఏమిటి?"
+    
+    Optimized:
+    ప్రజలు నన్ను <T3>ఇలా<T3> అడుగుతూనే ఉంటారు, "సద్గురు, ఈ దేశంలో ఆధ్యాత్మిక ప్రక్రియను పునరుద్ధరించడానికి మార్గం ఏమిటి?" <T3>అంటారు.<T3>
+    
+     description:
+    Here the subject part is long, bringing the whole long phrase to the end may make sync loss while dubbing. So what we did is, we added the verb that conveys asking again at the end to make it end in a natural way of spoken Telugu. also not the i have added the word ఇలా as a as a cataphoric adverb / discourse-bridging adverb.
+    
     
     Now give the output in the below format:
     
     
     Result Format:
-    Now please give the result in the below format:
+    In the result please give the English script that was made into paragraphs in the previous step. And then give the optimized telugu script as per above guidelines. just bold the places where you have made changes so that I can review easily - don't place any tags there. No need to give the original translation script and any other additional information. 
     
-    Please give the optimized telugu script. Bold Every single place where optimizing is done. Don't keep the tags, instead use bold so that i can identify visually easily. Also after each optimization give alternatives in the optimized script itself. The way to give alternatives and examples are shoen below. But I want the alternatives to be appearing in the script itself, not as a separate section at the end.
+    after the english and telugu scripts, give the suggestions section as below:
     
-    Also after every paragraph, in the optimized script insert an empty line
+    
+    The suggestion section should be in table format: Original Telugu | Optimized Telugu | Alternatives
     
     
     For Each contextual optimization:
-    optimized version of word/phrase/sentence with the optimized portion in bold [ original tagged portion of the sentence | Type of optimization |  Alternative 1 for tagged portion | Alternative 2 for tagged portion| Alternative 3 for tagged portion| Alternative 4 for tagged portion|  Alternative 5 for tagged portion]
+    Column 1: Optimized full sentence with the  word/phrase that is changed in bold  
+    Column 2: Original telugu word/phrase that is changed
+    Column 3: Alternative 1| Alternative2| Alternative 3 | Alternative 4| Alternative 5|Alternative 6 
     
     
-    Example English sentence: This deity is about wellbeing. She is <T1>dedicated</T1> to that.
+    
+    
+    Example English sentence: This deity is  <T1>dedicated</T1> to wellbeing.
     
     Example Output:
-    ఈ దేవత శ్రేయస్సు గురించి, ఆమె శ్రేయస్సుకు <Bold >అధిదేవత </Bold > [ అంకితమైన దేవత | Context | ప్రతీకమైన - symbolic of | కారకుడైన - the causal one for | అధిపతి అయిన - the lord of | ప్రసాదించే - the one who bestows | సంరక్షకుడైన - the protector of |బాధ్యత వహించే - the one responsible for ]
+    Column 1: ఈ దేవత శ్రేయస్సుకు అధిదేవత 
+    Column 2: అంకితమైన దేవత 
+    Column 3: ప్రతీకమైన | కారకుడైన | అధిపతి అయిన  | ప్రసాదించే | సంరక్షకుడైన |బాధ్యత వహించే 
+    
     
     
     
@@ -2234,21 +2537,29 @@
     
     For Each literal translation optimization:
     
-    optimized version of word/phrase/sentence in bold [ original text | Type of optimization |  An alternative which expresses the intention, but at the same time follows the sentence structure like length, number of clauses or meaningful chunks, number of segments in the sentence with gaps between them etc. | Another alternative assuming that this tagged position is absent or lost and you have to bridge the gap based on the context that is going on and based on the previous sentences and the later sentences.]
+    Column 1: Optimized full sentence with the optimized word/phrase in bold
+    
+    Column 2: Original telugu full sentence
+    
+    Column 3:   An alternative which expresses the intention, but at the same time follows the sentence structure like length, number of clauses or meaningful chunks, number of segments in the sentence with gaps between them etc. | Anotheralternative, assuming that this tagged position is absent or lost and you have to bridge the gap based on the context that is going on and based on the previous sentences and the later sentences.
     
     
     
     Example English Sentence: <T2>You are supposed to overcome your biological instincts… </T2>
     Example output:
-    మీరు మీ జీవసంబంధమైన ప్రవృత్తులను అధిగమించారనేది నా ఉద్దేశం … [మీరు మీ జీవసంబంధమైన ప్రవృత్తులను అధిగమించి ఉండాలి …  | Intention| మీరు మీ జీవసంబంధమైన ప్రవృత్తులను అధిగమించి ఉంటారని నేను భావిస్తున్నాను … | ఎందుకంటే మనుషులుగా మనం ఆ పరిమితులను దాటగలం...] 
+    Column 1: మీరు మీ జీవసంబంధమైన ప్రవృత్తులను అధిగమించి ఉండాలి … 
+    
+    Column 2: మీరు మీ జీవసంబంధమైన ప్రవృత్తులను అధిగమించారనేది నా ఉద్దేశం … 
+    Column 3:మీరు మీ జీవసంబంధమైన ప్రవృత్తులను అధిగమించి ఉంటారని నేను భావిస్తున్నాను |  ఎందుకంటే మనుషులుగా మనం ఆ పరిమితులను దాటగలం 
     
     
-    The <Bold> </Bold> tags are used here to let you know what portion needs to be bolded in the output. no need to keep these tags in the output.
-    
-    Result:
-    In the result please give the transcribed english script in the same blocks of thoughts structure, and then give the optimized telugu script as per above guidelines. No need to give the original translation script and any other additional information. 
+    The <Bold> </Bold> tags are used here to let you know what portion needs to be bolded in the output. no need to keep these tags in the output. 
     
     
+    
+    
+    
+    For reframing the quoted or thinking sentences, no need to give any alternatives.
     
     
     </script>
@@ -2256,7 +2567,6 @@
   <script>
     const message = document.getElementById('message');
 
-    // --- SHARED UTILS ---
     function getPromptFromId(id) {
       const promptElement = document.getElementById(id);
       return promptElement ? promptElement.textContent.trim() : "";
@@ -2269,79 +2579,44 @@
       showMessage.timeout = setTimeout(() => { message.classList.remove('show'); }, 3000);
     }
 
-    // --- WORKFLOW LOGIC ---
-    const descriptions = {
-      1: "Translation.",
-    };
-    const results = {
-      1: "Translated Script",
-    };
-    const stepNames = {
-      1: "Step One",
-    };
-    const aiNames = {
-      1: "Task A",
-    };
-
-    function handleClear(step) {
-      const box = document.getElementById(`input${step}`);
-      if (box) box.value = "";
-      showMessage("🗑️ Cleared Step " + step);
-    }
-
-    function handleCopy(step) {
-      const finalPrompt = getPromptFromId(`prompt${step}`);
-      navigator.clipboard.writeText(finalPrompt).then(() => {
-        showMessage("📋 Prompt copied from Step " + step);
+    function copyById(id) {
+      const textToCopy = getPromptFromId(id);
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showMessage("📋 Prompt copied to clipboard");
       });
     }
 
-    function handleSplitCopy() {
-        const textToCopy = getPromptFromId("prompt_split");
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            showMessage("📋 Split prompt copied");
-        });
-    }
-    
-    function handleAiReviewCopy() {
-        const textToCopy = getPromptFromId("prompt_ai_review");
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            showMessage("📋 AI Review prompt copied");
-        });
+    const descriptions = {
+      1: `<strong>Step 1:</strong> Click on the "Initial Translation" button, the prompt will be copied to the clipboard. Paste the prompt in gemini ai and attach the audio file and click on Run. It will give english script and telugu script as lines. <br><br>
+          <strong>Step 2:</strong> Copy the prompt from the second button and paste it as a reply to the previous response. It will give a refined telugu script.<br><br>
+          <strong>Step 3:</strong> Copy the prompt from the third button and paste it as a reply to the previous response. It will give a punctuated script made into paragraphs.<br><br>
+          <strong>Step 4:</strong> Copy the prompt from the fourth button and paste it as a reply to the previous response. It will give the English and Final Telugu script along with few suggestions at the end. Can copy these to the translation document for further processing.`,
+    };
+    const results = {
+      1: "Finalized English & Telugu Script",
+    };
+    const stepNames = { 1: "Step One" };
+    const aiNames = { 1: "Translation Pipeline" };
+
+    function handleClear(step) {
+      showMessage("🗑️ Step reset");
     }
 
-
-    // Build Steps
     const container = document.getElementById('stepsContainer');
-
-    function createPart(title, steps, className) {
-      const partDiv = document.createElement('div');
-      partDiv.className = `part-section ${className}`;
-      partDiv.style.borderRadius = "16px";
-      partDiv.style.marginBottom = "40px";
-      if(className === 'part1') partDiv.style.borderLeft = "5px solid #4a90e2";
-      
-      partDiv.innerHTML = `<h3 style="font-size:1.6rem; font-weight:700; margin-bottom:25px; text-align:center; padding-bottom:10px; border-bottom:2px solid rgba(0,0,0,0.1); color:#4a90e2">${title}</h3>`;
-      steps.forEach(i => partDiv.appendChild(createStep(i)));
-      return partDiv;
-    }
 
     function createStep(i) {
       const stepDiv = document.createElement('div');
-      stepDiv.className = 'step';
+      stepDiv.className = 'step part1';
       
-      let copyButtonText = "⁠Translation Prompt";
-      let textarea = ''; // No textarea in Step 1
-
-      // Add extra buttons for Step 1
-      let extraButtons = "";
-      if (i === 1) {
-        extraButtons = `
-          <button class="copy-btn" onclick="handleSplitCopy()">Meaning and Language Tuning Prompt
-</button>
-          <button class="copy-btn" onclick="handleAiReviewCopy()">AI Review Prompt</button>
-        `;
-      }
+      const buttons = `
+        <div class="button-group">
+          <button class="copy-btn" onclick="copyById('prompt_initial')">Initial Translation</button>
+          <button class="copy-btn" onclick="copyById('prompt_finetune')">Finetune</button>
+          <button class="copy-btn" onclick="copyById('prompt_paragraphs')">Make into paragraphs</button>
+          <button class="copy-btn" onclick="copyById('prompt_review')">AI Review</button>
+          <button class="clear-btn" onclick="handleClear(${i})">🗑️ Clear</button>
+        </div>
+      `;
 
       stepDiv.innerHTML = `
         <h3>
@@ -2349,239 +2624,59 @@
           <span>${stepNames[i]}</span>
           <span style="background:#f7f5f3; color:#8b7057; padding:6px 12px; border-radius:8px; font-size:0.8rem; margin-left:auto; border:1px solid #e8e5e0;">${aiNames[i]}</span>
         </h3>
-        <div class="step-description"><strong>📋 Instructions:</strong> ${descriptions[i]}</div>
+        ${buttons}
+        <div class="step-description"><strong>📋 Instructions:</strong><br>${descriptions[i]}</div>
         <div class="step-result"><strong>📤 Expected Output:</strong> ${results[i]}</div>
-        ${textarea}
-        <div class="button-group">
-          <button class="copy-btn" onclick="handleCopy(${i})">${copyButtonText}</button>
-          ${extraButtons}
-          <button class="clear-btn" onclick="handleClear(${i})">🗑️ Clear</button>
-        </div>
       `;
       return stepDiv;
     }
 
-    container.appendChild(createPart("Workflow", [1], "part1"));
+    container.appendChild(createStep(1));
 
-    // --- SUGGESTIONS LOGIC (Specific to Request) ---
-    
     function handleClearSuggestions() {
-        const box = document.getElementById('input_suggestions');
-        if(box) box.innerHTML = "";
+        document.getElementById('input_suggestions').innerHTML = "";
         showMessage("🗑️ Suggestions box cleared");
     }
 
-    // Global Clear All
     function clearAllInputs() {
-        // Step 1 has no input box, so only clear suggestions
         handleClearSuggestions();
         showMessage("🗑️ All input boxes cleared");
     }
 
-    // --- COMPLEX FORMATTING LOGIC FOR SUGGESTIONS ---
-    
     function formatBoldText() {
         const box = document.getElementById('input_suggestions');
         if (!box) return;
-
-        const boldColor = '#5CE65C'; // Green
-        const bracketColor = '#fff9c4'; // Yellow
+        const boldColor = '#5CE65C'; 
+        const bracketColor = '#fff9c4'; 
         let changedCount = 0;
-
-        // STEP 1: Process Square Brackets [text] -> Yellow Background (Wrap content)
         const originalHTML = box.innerHTML;
         const newHTML = originalHTML.replace(/(\[)((?:<[^>]+>|[^\]])*)(\])/g, (match, p1, p2, p3) => {
-            if (p2.includes('style="background-color: rgb(255, 249, 196)"') || p2.includes('style="background-color: #fff9c4"')) {
-                return match; 
-            }
             changedCount++;
             return `${p1}<span style="background-color: ${bracketColor}">${p2}</span>${p3}`;
         });
-        
-        if (originalHTML !== newHTML) {
-            box.innerHTML = newHTML;
-        }
-
-        // STEP 2: Process Bold Tags -> Green AND UNBOLD (Unless inside Yellow)
+        box.innerHTML = newHTML;
         const boldElements = box.querySelectorAll('b, strong');
         boldElements.forEach(boldEl => {
-            if (boldEl.closest('table')) return; 
-            
-            const parent = boldEl.parentElement;
-            const isInsideYellow = parent && parent.tagName === 'SPAN' && 
-               (parent.style.backgroundColor === 'rgb(255, 249, 196)' || parent.style.backgroundColor === '#fff9c4');
-
-            if (isInsideYellow) return; 
-            
-            if(parent.tagName === 'SPAN' && parent.style.backgroundColor) return;
-
             const span = document.createElement('span');
             span.innerHTML = boldEl.innerHTML;
             span.style.backgroundColor = boldColor;
             boldEl.parentNode.replaceChild(span, boldEl);
             changedCount++;
         });
-
-        if (changedCount > 0) showMessage(`🎨 Formatted ${changedCount} items.`);
-        else showMessage("ℹ️ No new items found to format.");
+        showMessage(changedCount > 0 ? `🎨 Formatted ${changedCount} items.` : "ℹ️ No items to format.");
     }
 
-    // --- EVENT LISTENERS FOR SUGGESTIONS BOX (Paste & Keydown) ---
     document.addEventListener('DOMContentLoaded', function() {
-        const box = document.getElementById('input_suggestions');
         const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-
-        if (scrollToTopBtn) {
-            window.onscroll = function() {
-                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                    scrollToTopBtn.classList.add("visible");
-                } else {
-                    scrollToTopBtn.classList.remove("visible");
-                }
-            };
-            scrollToTopBtn.addEventListener('click', () => {
-                const firstPart = document.querySelector('.part1');
-                if (firstPart) firstPart.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        }
-
-        if(!box) return;
-
-        box.addEventListener('keydown', function(e) {
-            if (e.key === ' ' && !e.shiftKey && !e.ctrlKey) {
-                const sel = window.getSelection();
-                if (!sel.rangeCount) return;
-                
-                const range = sel.getRangeAt(0);
-                const node = range.startContainer;
-                let parent = (node.nodeType === 3) ? node.parentNode : node;
-                
-                const isFormatted = (el) => {
-                    if (!el) return false;
-                    const tag = el.tagName;
-                    if (tag === 'B' || tag === 'STRONG') return true;
-                    if (tag === 'SPAN' && el.style.backgroundColor) return true;
-                    return false;
-                };
-
-                let formattedParent = null;
-                if (isFormatted(parent)) formattedParent = parent;
-                else formattedParent = parent.closest('b, strong, span[style*="background-color"]');
-
-                if (formattedParent && isFormatted(formattedParent)) {
-                    const isAtEnd = (range.endOffset === node.textContent.length);
-                    if (isAtEnd) {
-                        e.preventDefault(); 
-                        const space = document.createTextNode(' ');
-                        if (formattedParent.nextSibling) formattedParent.parentNode.insertBefore(space, formattedParent.nextSibling);
-                        else formattedParent.parentNode.appendChild(space);
-                        
-                        const newRange = document.createRange();
-                        newRange.setStart(space, 1); 
-                        newRange.collapse(true);
-                        sel.removeAllRanges();
-                        sel.addRange(newRange);
-                    }
-                }
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollToTopBtn.classList.add("visible");
+            } else {
+                scrollToTopBtn.classList.remove("visible");
             }
-        });
-
-        box.addEventListener('paste', function(e) {
-            e.preventDefault();
-            const clipboardData = e.clipboardData || window.clipboardData;
-            const pastedHtml = clipboardData.getData('text/html');
-            const pastedText = clipboardData.getData('text/plain');
-
-            const tempRenderDiv = document.createElement('div');
-            if (pastedHtml) tempRenderDiv.innerHTML = pastedHtml;
-            else tempRenderDiv.innerText = pastedText;
-
-            function rebuildClean(node, isRoot = false) {
-                if (node.nodeType === 3) return document.createTextNode(node.textContent);
-                if (node.nodeType === 1) {
-                    const tagName = node.tagName.toLowerCase();
-                    const style = window.getComputedStyle(node);
-                    
-                    if (['table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'].includes(tagName)) {
-                        const newEl = document.createElement(tagName);
-                        if (node.hasAttribute('colspan')) newEl.setAttribute('colspan', node.getAttribute('colspan'));
-                        if (node.hasAttribute('rowspan')) newEl.setAttribute('rowspan', node.getAttribute('rowspan'));
-                        Array.from(node.childNodes).forEach(child => newEl.appendChild(rebuildClean(child)));
-                        return newEl;
-                    }
-
-                    const fontWeight = parseInt(style.fontWeight);
-                    let isBold = (tagName === 'b' || tagName === 'strong' || fontWeight >= 700);
-                    if (isRoot) isBold = false;
-
-                    const childFragment = document.createDocumentFragment();
-                    let hasBlockChildren = false;
-                    Array.from(node.childNodes).forEach(child => {
-                        const rebuilt = rebuildClean(child, false);
-                        if (rebuilt.nodeType === 1 && ['div','p','table','br'].includes(rebuilt.tagName.toLowerCase())) {
-                            hasBlockChildren = true;
-                        }
-                        childFragment.appendChild(rebuilt);
-                    });
-
-                    if (isBold && !hasBlockChildren) {
-                        const b = document.createElement('b');
-                        b.appendChild(childFragment);
-                        return b;
-                    }
-
-                    const isBlock = (style.display === 'block' || tagName === 'p' || tagName === 'div' || tagName === 'br');
-                    if (tagName === 'br') return document.createElement('br');
-                    if (isBlock) {
-                        const div = document.createElement('div');
-                        div.appendChild(childFragment);
-                        return div;
-                    }
-                    return childFragment;
-                }
-                return document.createDocumentFragment();
-            }
-
-            tempRenderDiv.style.position = 'absolute';
-            tempRenderDiv.style.left = '-9999px';
-            document.body.appendChild(tempRenderDiv);
-            
-            const cleanFragment = rebuildClean(tempRenderDiv, true);
-            document.body.removeChild(tempRenderDiv);
-
-            const selection = window.getSelection();
-            if (selection.rangeCount) {
-                const range = selection.getRangeAt(0);
-                range.deleteContents();
-                
-                let container = range.startContainer;
-                if (container.nodeType === 3) container = container.parentNode;
-                const boldParent = container.closest('b, strong');
-
-                if (boldParent) {
-                    const rangeAfter = document.createRange();
-                    rangeAfter.setStart(range.endContainer, range.endOffset);
-                    rangeAfter.setEndAfter(boldParent.lastChild);
-                    const contentAfter = rangeAfter.extractContents();
-                    
-                    const insertRange = document.createRange();
-                    insertRange.setStartAfter(boldParent);
-                    insertRange.collapse(true);
-                    insertRange.insertNode(cleanFragment);
-                    
-                    if (contentAfter.textContent.length > 0) {
-                        const newBold = document.createElement('b');
-                        newBold.appendChild(contentAfter);
-                        const marker = document.createTextNode('');
-                        insertRange.insertNode(marker);
-                        marker.parentNode.insertBefore(newBold, marker);
-                        marker.parentNode.removeChild(marker);
-                    }
-                } else {
-                    range.insertNode(cleanFragment);
-                }
-                range.collapse(false);
-            }
+        };
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
   </script>
